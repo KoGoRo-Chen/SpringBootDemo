@@ -8,9 +8,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import mvc.bean.Person;
 /*
  * Base url = http://localhost:8080/SpringMVC/mvc
  * Controller url = Base url + "/hello"  
@@ -105,7 +108,42 @@ public class HelloController {
 		
 		return String.format("最高分=%d、最低分=%d、平均=%.1f、總分=%d、及格分數=%s、不及格=%s", 
 										stat.getMax(), stat.getMin(), stat.getAverage(), stat.getSum(), passList, failList);}
-
+	
+	/*
+	 * 6. 得到多筆資料
+	 * 路徑: "/personMap?name=John&age=18&score=80&pass=true
+	 * 全網址: http://localhost:8080/SpringMVC/mvc/hello/personMap?name=John&age=18&score=80&pass=true
+	 * */
+	@GetMapping("/personMap")
+	@ResponseBody
+	public String getPersonMap(@RequestParam Map<String, String> personMap) {
+		return "personMap = " + personMap;
+	}
+	
+	/*
+	 * 7. 多筆參數資料轉 bean (例如: person)
+	 * 路徑: "/person?name=John&age=18&score=80&pass=true
+	 * 全網址: http://localhost:8080/SpringMVC/mvc/hello/person?name=John&age=18&score=80&pass=true
+	 * */
+	@GetMapping("/person")
+	@ResponseBody
+	public String getPerson(Person person) {
+		return "person = " + person;
+	}
+	
+	/*
+	 * 8. 路徑參數 @PathVairable
+	 * 路徑: "/java_score/75?name=John
+	 * 路徑: "/java_score/45?name=Mary
+	 * 全網址: http://localhost:8080/SpringMVC/mvc/hello/java_score/75?name=John
+	 * 全網址: http://localhost:8080/SpringMVC/mvc/hello/java_score/45?name=Mary
+	 * */
+	@GetMapping("/java_score/{score}")
+	@ResponseBody
+	public String getJavaScore(@PathVariable("score") Integer score, @RequestParam("name") String name) {
+		return String.format("%s's java score: %d, pass: %b", name, score, score >= 60);
+	}
+	
 }
 	
 	
