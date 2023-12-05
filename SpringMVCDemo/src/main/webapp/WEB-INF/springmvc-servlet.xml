@@ -16,4 +16,4 @@
 	
 	<context:component-scan base-package="mvc" />
 	
-</beans>	
+</beans>		

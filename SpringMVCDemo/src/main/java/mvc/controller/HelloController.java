@@ -92,7 +92,7 @@ public class HelloController {
 		 */
 		//利用collectors.partitioningBy() 來分組
 		Map<Boolean, List<Integer>> resultMap = scores.stream()
-																					  .collect(Collectors.partitioningBy(score -> score >= 60));
+																				  .collect(Collectors.partitioningBy(score -> score >= 60));
 		
 		return String.format("最高分=%d、最低分=%d、平均=%.1f、總分=%d、及格分數=%s、不及格=%s", 
 										stat.getMax(), stat.getMin(), stat.getAverage(), stat.getSum(), resultMap.get(true), resultMap.get(false));

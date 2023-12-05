@@ -5,9 +5,12 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 會議室預訂系統
@@ -40,8 +43,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * -----------------------------------------------------------------------------------------------
  * 範例：http://localhost:8080/SpringMVC/mvc/booking/viewBookings
  * */
-
+@Controller
+@RequestMapping("/booking")
 public class BookingController {
+	
 	/**
 	 * 預約紀錄
 	 +-----------+--------+-------+------------+
@@ -57,27 +62,23 @@ public class BookingController {
 	private AtomicInteger bookingIdCount = new AtomicInteger(0);
 	
 	//預約系統
-	//http://localhost:8080/SpringMVC/mvc/booking/bookRoom?roomId=101&name=Tom&date=2023-12-04
-	@GetMapping("/booking/bookRoom")
+	//http://localhost:8080/SpringMVCDemo/mvc/booking/bookRoom?roomId=101&name=Tom&date=2023-12-04
+	@GetMapping("/bookRoom")
 	@ResponseBody
 	public String bookroom(@RequestParam Map<String, Object> BookingInfo) {
 		if(bookings.contains(BookingInfo)) {
-			return String.format("追加失敗！" + bookings);
+			return String.format("Booking Failed! " + bookings);
 		}
 			bookings.add(BookingInfo);
-			return String.format("追加成功！" + bookings);
+			bookingIdCount.incrementAndGet();
+			return String.format("Booking Success! " + bookings + "BookingID: " + bookingIdCount);
 		}
+
    //取消預訂
-   // @GetMapping("/booking/cancelBooking/{bookingId}")	
-   //@ResponseBody
-   //public String cancelBooking(@RequestParam Integer cancelId) {
-   //bookings.stream().anyMatch().
-   //return "取消成功"
-   //}
-	 }
-	 
+	
+  //查看所有預訂
 
-
+} //end of class
 /*@RequestParam(value = "roomId", required = true) Integer roomId,
 @RequestParam(value = "name", required = true) String name,
 @RequestParam(value = "date", required = true) Date meetDate*/
