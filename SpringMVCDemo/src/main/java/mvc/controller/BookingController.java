@@ -1,5 +1,6 @@
 package mvc.controller;
 
+import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 會議室預訂系統(Web API)
@@ -46,6 +49,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 範例：http://localhost:8080/SpringMVC/mvc/booking/viewBookings
  * */
 @Controller
+//@RestController
 @RequestMapping("/booking")
 public class BookingController {
 	/**
@@ -68,27 +72,37 @@ public class BookingController {
 	 * 參數：會議室ID (roomId), 使用者名稱 (name), 預訂日期 (date)
 	 * 返回：預訂成功(會得到預約號碼 bookingId)或失敗的消息
 	 * 範例：http://localhost:8080/SpringMVC/mvc/booking/bookRoom?roomId=101&name=Tom&date=2023-12-04
+	 * @throws ParseException 
 	*/
-	@GetMapping(value = "/bookRoom", produces = "text/plain;charset=utf-8")
+	//@GetMapping(value = "/bookRoom", produces = "text/plain;charset=utf-8")
+	@RequestMapping(value = "/bookRoom", method = {RequestMethod.GET, RequestMethod.POST}, produces = "text/plain;charset=utf-8")
 	@ResponseBody
 	public String bookingBookRoom(@RequestParam(name = "roomId") Integer roomId,
 								  @RequestParam(name = "name") String name,
-								  @RequestParam(name = "date") String date) {
+								  @RequestParam(name = "date") String date) throws ParseException {
+		
+		// 判斷是否該會議室當日已被預約
+		boolean isBooked = bookings.stream()
+								   .anyMatch(booking -> booking.get("roomId").equals(roomId) && 
+										   				booking.get("date").equals(date));
+		if(isBooked) {
+			return String.format("預訂失敗 (roomId = %d date = %s 已被預約)", roomId, date);
+		}
 		
 		// 預約號碼
 		int bookingId = bookingIdCount.incrementAndGet();
-		
 		// 預約資訊
 		Map<String, Object> bookRoom = new LinkedHashMap<>();
 		bookRoom.put("bookingId", bookingId);
 		bookRoom.put("roomId", roomId);
 		bookRoom.put("name", name);
 		bookRoom.put("date", date);
-		
+		//bookRoom.put("date", new SimpleDateFormat("yyyy-MM-dd").parse(date));
 		// 放到預約集合
 		bookings.add(bookRoom);
 		
 		return String.format("預訂成功 (預約號碼 = %d)", bookingId);
+		
 	}
 	
 	/** 2.取消預訂：
@@ -110,7 +124,17 @@ public class BookingController {
 			return String.format("取消成功 (預約號碼 = %d)", bookingId);
 		}
 		return String.format("取消失敗 (預約號碼 = %d)", bookingId);
-	} 
+	}
+	
+	@GetMapping(value = "/autoCancelFirstBooking", produces = "text/plain;charset=utf-8")
+	@ResponseBody
+	public String autoCancelFirstBooking() {
+		if(!bookings.isEmpty()) {
+			bookings.remove(0);
+			return "自動取消第一筆成功";
+		}
+		return "自動取消第一筆失敗";
+	}
 	
 	/** 3.查看所有預訂：
 	 * 路徑：/booking/viewBookings
@@ -119,10 +143,14 @@ public class BookingController {
 	 */
 	
 	@GetMapping(value = "/viewBookings", produces = "text/plain;charset=utf-8")
-	@ResponseBody
-	public String bookingViewBookings() {
-		StringBuilder sb = new StringBuilder("預約紀錄:\n");
-		bookings.forEach(booking -> sb.append(booking).append("\n"));
-		return sb.toString();
+	//@ResponseBody
+	public ModelAndView bookingViewBookings() {
+		//StringBuilder sb = new StringBuilder("預約紀錄:\n");
+		//bookings.forEach(booking -> sb.append(booking).append("\n"));
+		ModelAndView mv = new ModelAndView();
+		// jsp + model 資料配置好
+		mv.addObject("bookings", bookings);
+		mv.setViewName("/WEB-INF/views/booking/list.jsp");
+		return mv;
 	}
 }
