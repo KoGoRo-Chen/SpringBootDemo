@@ -26,7 +26,10 @@
 						</td>
 						<td>${ booking.bookingId }</td>
 						<td>${ booking.roomId }</td>
-						<td>${ booking.name }</td>
+						<td>
+							<input type="text" id="name" name="name" value="${ booking.name }" size="10">
+							<button type="button" onclick="Location.href='/SpringMVCDemo/mvc/booking/cancelBooking/${ booking.bookingId }/updateName?name='+ document.getElementById('name').value'">更名</button>
+						</td>
 						<td>${ booking.date }</td>
 					</tr>
 				</c:forEach>
