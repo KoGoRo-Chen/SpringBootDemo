@@ -6,10 +6,10 @@ import java.lang.reflect.Proxy;
 
 //動態代理
 public class DynProxy {
-	// 被代理的對象
+	// 被代理的物件
 		private Object object;
 		
-		public DynProxy(Object object) { // 注入被代理的對象
+		public DynProxy(Object object) { // 注入被代理的物件
 			this.object = object;
 		}
 		
@@ -24,8 +24,19 @@ public class DynProxy {
 			InvocationHandler handler = (Object proxy, Method method, Object[] args) -> {
 				Object result = null;
 				
+				// 呼叫前置通知
+				MyPrintArgsAspect.before(interfaces, method, args);
+				
 				// 調用被代理物件的業務方法
-				result = method.invoke(object, args);
+				try {
+					result = method.invoke(object, args);
+				} catch (Exception e) {
+					// 呼叫例外通知 
+					MyPrintArgsAspect.throwing(e);
+				}
+				
+				// 呼叫後置通知
+				MyPrintArgsAspect.end();
 				
 				return result;
 			};
