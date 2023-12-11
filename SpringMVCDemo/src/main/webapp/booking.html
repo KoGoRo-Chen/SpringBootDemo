@@ -22,7 +22,7 @@
 			<tr>
 				<!-- 預約表單 -->
 				<td valign="top">
-					<form class="pure-form" method="post" action="/SpringMVCDemo/mvc/booking/bookRoom" target="resultFrame">
+					<form class="pure-form" method="post" action="/SpringMVC/mvc/booking/bookRoom" target="resultFrame">
 						會議室: <select name="roomId">
 								<option value="101">101室</option>
 								<option value="201">201室</option>
@@ -36,7 +36,7 @@
 				</td>
 				<!-- 回應 -->
 				<td rowspan="3" valign="top" style="padding-left: 15px;">
-					<iframe name="resultFrame" style="border: 1px solid #cccccc" width="500px" height="500px"></iframe>
+					<iframe name="resultFrame" style="border: 0px solid #cccccc" width="800px" height="500px"></iframe>
 				</td>
 			</tr>
 			<tr>
@@ -47,7 +47,7 @@
 					<form class="pure-form">
 						<input type="number" name="bookingId" id="bookingId" value="1" required />
 						<a href="javascript:void(0);" 
-						   onClick="window.top.resultFrame.location.href='/SpringMVCDemo/mvc/booking/cancelBooking/' + document.getElementById('bookingId').value"	
+						   onClick="window.top.resultFrame.location.href='/SpringMVC/mvc/booking/cancelBooking/' + document.getElementById('bookingId').value"	
 						   class="pure-button pure-button-primary">
 							取消預約
 						</a>
@@ -57,7 +57,7 @@
 			<tr>
 				<!-- 查詢預約 -->
 				<td valign="top">
-					<a href="/SpringMVCDemo/mvc/booking/viewBookings" 
+					<a href="/SpringMVC/mvc/booking/viewBookings" 
 					   class="pure-button pure-button-primary" 
 					   target="resultFrame">查詢預約</a>
 				</td>

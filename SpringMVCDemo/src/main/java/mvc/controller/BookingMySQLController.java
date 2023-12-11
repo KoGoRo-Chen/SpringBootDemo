@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import mvc.bean.BookingRoom;
+import mvc.bean.Room;
 import mvc.dao.BookingDao;
+import mvc.dao.RoomDao;
 
 /**
  * 會議室預訂系統(Web API)
@@ -78,6 +80,9 @@ public class BookingMySQLController {
 	@Qualifier("bookingDaoMySQL") // 指定綁定的實作物件
 	private BookingDao bookingDao;
 	
+	@Autowired
+	private RoomDao roomDao;
+	
 	/**
 	 * 會議室資訊(Room)
 	 +--------+-----------+------------+
@@ -96,6 +101,14 @@ public class BookingMySQLController {
 	 |     3     |  102   |  Rose    | 2023-12-06  |
 	 +-----------+--------+----------+-------------+
 	*/
+	
+	// 首頁: http://localhost:8080/SpringMVC/mvc/bookingMySQL/
+	@GetMapping("/")
+	public String index(Model model) {
+		List<Room> rooms = roomDao.findAllRooms();
+		model.addAttribute("rooms", rooms);
+		return "booking/bookingMySQL";
+	}
 	
 	/** 1.預訂會議室：
 	 * 路徑：/bookingMySQL/bookRoom
@@ -154,10 +167,11 @@ public class BookingMySQLController {
 	 */
 	
 	@GetMapping(value = "/viewBookings", produces = "text/plain;charset=utf-8")
-	@ResponseBody
+	//@ResponseBody
 	public String bookingViewBookings(Model model) {
-		List<BookingRoom> bookingRooms = bookingDao.findAllBookingRooms();
-		return bookingRooms.toString();
+		List<BookingRoom> bookings = bookingDao.findAllBookingRooms();
+		model.addAttribute("bookings", bookings);
+		return "booking/listMySQL";
 	}
 	
 	/* 4.修改預約人
@@ -171,6 +185,17 @@ public class BookingMySQLController {
 	public String updateName(@PathVariable("bookingId") Integer bookingId, @RequestParam("name") String newName) {
 		int rowcount = bookingDao.updateBookingUsername(bookingId, newName);
 		return rowcount == 0 ? "預約人修改失敗" : "預約人修改成功";
+	}
+	
+	@RequestMapping(value = "/room", method = {RequestMethod.POST}, produces = "text/plain;charset=utf-8")
+	@ResponseBody
+	public String addRoom(@RequestParam("roomId") Integer roomId, 
+			@RequestParam("roomName") String roomName, 
+			@RequestParam("roomSize") Integer roomSize) {
+		
+		Room room = new Room(roomId, roomName, roomSize);
+		roomDao.addRoom(room);
+		return "新增會議室成功";
 	}
 }
 

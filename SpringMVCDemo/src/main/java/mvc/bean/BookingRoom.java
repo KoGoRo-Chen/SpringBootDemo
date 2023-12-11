@@ -12,12 +12,12 @@ public class BookingRoom {
 	private String username;
 	private String bookingDate;
 	private Timestamp createDate;
-
-	// 關聯欄位
+	
+	// 關聯欄位(多對一 ManyToOne)
 	private Room room;
-
+	
 	public BookingRoom() {
-
+		
 	}
 
 	public BookingRoom(Integer bookingId, Integer roomId, String username, String bookingDate, Timestamp createDate,
@@ -82,5 +82,8 @@ public class BookingRoom {
 	public String toString() {
 		return new Gson().toJson(this);
 	}
+	
+	
+	
 	
 }

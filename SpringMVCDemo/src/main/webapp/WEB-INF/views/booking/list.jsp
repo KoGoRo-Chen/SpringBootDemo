@@ -12,25 +12,31 @@
 		Booking List
 		<table class="pure-table pure-table-bordered">
 			<thead>
-				<tr><th>bookingId</th><th>roomId</th><th>name</th><th>date</th></tr>
+				<tr><th>cancel</th><th>bookingId</th><th>roomId</th><th>name</th><th>date</th></tr>
 			</thead>
 			<tbody>
 				<c:forEach var="booking" items="${ bookings }">
 					<tr>
-						 <td>
-							<a href="javascript:void(0)" title="按我一下取消" 
-							onClick="window.top.resultFrame.location.href='/SpringMVCDemo/mvc/booking/cancelBooking/${ booking.bookingId }'"
-							>
-							cancel
-							</a>
-						</td>
-						<td>${ booking.bookingId }</td>
-						<td>${ booking.roomId }</td>
-						<td>
-							<input type="text" id="name" name="name" value="${ booking.name }" size="10">
-							<button type="button" onclick="Location.href='/SpringMVCDemo/mvc/booking/cancelBooking/${ booking.bookingId }/updateName?name='+ document.getElementById('name').value'">更名</button>
-						</td>
-						<td>${ booking.date }</td>
+						<form method="post" action="/SpringMVC/mvc/booking/${ booking.bookingId }/updateName">
+							<td>
+								<a href="javascript:void(0)" 
+								   onClick="location.href='/SpringMVC/mvc/booking/cancelBooking/${ booking.bookingId }'"	
+								   title="按我一下可以取消">
+									Cancel
+								</a>
+							</td>
+							<td>${ booking.bookingId }</td>
+							<td>${ booking.roomId }</td>
+							<td>
+								<input type="text" id="name${ booking.bookingId }" name="name" value="${ booking.name }" size="10">
+								<button type="button"
+										onClick="location.href='/SpringMVC/mvc/booking/${ booking.bookingId }/updateName?name=' + document.getElementById('name${ booking.bookingId }').value">
+									更名 1
+								</button>
+								<button type="submit">更名 2</button>
+							</td>
+							<td>${ booking.date }</td>
+						</form>
 					</tr>
 				</c:forEach>
 			</tbody>
