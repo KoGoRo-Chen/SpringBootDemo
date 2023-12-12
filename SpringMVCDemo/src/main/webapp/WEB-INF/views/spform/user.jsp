@@ -27,22 +27,17 @@ id: 序號(input hidden)
 		</style>
 	</head>
 	<body style="padding: 15px">
-	
-	<!--<sp:form modelAttribute="user" method="post" action="" class="pure-form">: 使用 Spring Form 標籤創建一個表單，
-	modelAttribute="user" 將表單綁定到名為 "user" 的模型屬性上，method="post" 設置表單提交方法為 POST，
-	action="" 表示表單提交到當前頁面，class="pure-form" 添加了 Pure CSS 樣式。 -->
 		<sp:form modelAttribute="user" method="post" action="" class="pure-form">
 			<fieldset>
 				<legend>User Spring Form</legend>
 				<!-- 表單元素 -->
-				姓名: <sp:input path="name" type="text" /><p /> 
-				<!-- path="name" 指定這個輸入框與模型屬性 "user" 中的 "name" 屬性綁定。 -->
+				姓名: <sp:input path="name" type="text" /><p />
 				年齡: <sp:input path="age" type="number" /><p />
 				生日: <sp:input path="birth" type="date" /><p />
 				學歷: <sp:select path="educationId" 
 								items="${ educations }"
 								itemLabel="name"
-								itemValue="id" /><p /> <!-- Select = 下拉選單。path="educationId" 將下拉選單與模型屬性 "user" 中的 "educationId" 屬性綁定，items="${ educations }" 提供下拉選單的選項，itemLabel 和 itemValue 分別指定每個選項顯示的標籤和值。-->
+								itemValue="id" /><p />
 				性別: <sp:radiobuttons path="sexId" 
 								items="${ sexs }"
 								itemLabel="name"
