@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import mvc.bean.Room;
 
-@Repository
+@Repository("roomDaoImplMySQL")
 public class RoomDaoImplMySQL implements RoomDao {
 	
 	@Autowired

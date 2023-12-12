@@ -77,10 +77,11 @@ import mvc.dao.RoomDao;
 public class BookingMySQLController {
 	
 	@Autowired
-	@Qualifier("bookingDaoMySQL") // 指定綁定的實作物件
+	@Qualifier("bookingDaoMySQLDemo") // 指定綁定的實作物件
 	private BookingDao bookingDao;
 	
 	@Autowired
+	@Qualifier("roomDaoImplMySQL")
 	private RoomDao roomDao;
 	
 	/**

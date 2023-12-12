@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import mvc.bean.BookingRoom;
 import mvc.bean.Room;
 
-@Repository("bookingDaoMySQL") // 自行定義名稱
+@Repository("bookingDaoMySQLDemo") // 自行定義名稱
 // 預設的 name = "bookingDaoImplMySQL"
 public class BookingDaoImplMySQL implements BookingDao {
 	

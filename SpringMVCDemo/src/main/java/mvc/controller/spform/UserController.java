@@ -21,7 +21,7 @@ import mvc.dao.spform.DataDao;
 public class UserController {
 	
 	@Autowired
-	//@Qualifier("dataDaoImplInMemory")
+	@Qualifier("dataDaoImplInMemoryDemo")
 	private DataDao dataDao;
 	
 	@GetMapping("/")

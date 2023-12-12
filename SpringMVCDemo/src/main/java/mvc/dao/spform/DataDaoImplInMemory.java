@@ -10,7 +10,7 @@ import mvc.bean.spform.EducationData;
 import mvc.bean.spform.InterestData;
 import mvc.bean.spform.SexData;
 
-@Repository
+@Repository("dataDaoImplInMemoryDemo")
 public class DataDaoImplInMemory implements DataDao {
 
 	@Override
