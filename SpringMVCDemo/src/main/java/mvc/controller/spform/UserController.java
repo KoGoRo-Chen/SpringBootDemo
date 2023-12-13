@@ -84,6 +84,9 @@ public class UserController {
 		return "redirect:/mvc/user/"; // 重導到 user 首頁
 	}
 	
+	/*@PostMapping 是 Spring Framework 中的一個標註，它標記在方法上，表示這個方法處理 HTTP POST 請求。
+	 * 在 Spring MVC 中，@PostMapping 常用來處理提交表單的操作，其中 value 屬性指定了處理的請求路徑。
+	 */
 	@PostMapping("/") // 新增 User
 	public String addUser(User user) {
 		int rowcount = userDao.addUser(user);

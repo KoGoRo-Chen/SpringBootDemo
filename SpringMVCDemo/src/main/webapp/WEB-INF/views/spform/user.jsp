@@ -27,8 +27,10 @@ id: 序號(input hidden)
 		</style>
 		<script type="text/javascript">
 			function deleteUser(userId) {
+				//const =宣告一個常量，一旦被賦值，就不能再重新賦值或聲明
 				const url = '${pageContext.request.contextPath}/mvc/user/' + userId;
 				if(confirm('是否要刪除 ?')) {
+					//使用Fetch API向指定URL發送DELETE請求，返回一個Promise對象。
 					fetch(url, {method: 'DELETE'})
 					.then(response => {
 						//console.log(response);
