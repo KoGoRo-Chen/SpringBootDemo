@@ -26,17 +26,21 @@ id: 序號(input hidden)
 			}
 		</style>
 	</head>
-	<body style="padding: 15px">
+	<body style="padding: 10px">
+		
 		<table>
 			<tr>
-				<!-- user spring form -->
-				<td>
+				<!-- User Spring Form -->
+				<td valign="top" style="padding: 5px">
 					<%@ include file="userform.jspf" %>
 				</td>
-				<!-- user spring list -->
-				<td></td>
+				<!-- User Spring List -->
+				<td valign="top" style="padding: 5px">
+					<%@ include file="userlist.jspf" %>
+				</td>
 			</tr>
 		</table>
-
+	
+		
 	</body>
 </html>
