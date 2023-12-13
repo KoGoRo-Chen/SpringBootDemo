@@ -1,7 +1,9 @@
 package mvc.bean.spform;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import static java.util.stream.Collectors.joining;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,13 +23,13 @@ public class User {
 	private String resume; // 履歷
 	
 	private Integer educationId; // 教育程度Id(給表單用)
-	private EducationData education; // 教育程度(給List呈現用)
+	private EducationData education; // 教育程度(給 User Spring List 呈現用)
 	
 	private Integer sexId; // 性別Id(給表單用)
-	private SexData sex; // 性別(給List呈現用)
+	private SexData sex; // 性別(給 User Spring List 呈現用)
 	
 	private Integer[] interestIds; // 興趣Ids(給表單用)
-	private List<InterestData> interests; // 興趣(給List呈現用)
+	private List<InterestData> interests; // 興趣(給  User Spring List 呈現用)
 	
 	// ---------------------------------------------------------
 	
@@ -97,11 +99,23 @@ public class User {
 	public void setInterests(List<InterestData> interests) {
 		this.interests = interests;
 	}
-	@Override
-	public String toString() {
-		return new Gson().toJson(this);
+	
+	// 顯示所有興趣名稱(給 jstl 使用, 使用名稱: interestNames)
+	public String getInterestNames() {
+		if(interestIds != null && interests != null) {
+			return interests.stream()
+							.map(InterestData::getName)
+							.collect(joining(" "));
+		}
+		return "";
 	}
 	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", age=" + age + ", birth=" + birth + ", resume=" + resume
+				+ ", educationId=" + educationId + ", education=" + education + ", sexId=" + sexId + ", sex=" + sex
+				+ ", interestIds=" + Arrays.toString(interestIds) + ", interests=" + interests + "]";
+	}
 	
 	
 }

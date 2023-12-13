@@ -16,4 +16,5 @@ public interface DataDao {
 	
 	List<InterestData> finAllInterestDatas();
 	Optional<InterestData> getInterestDataById(Integer id);
+	
 }
