@@ -1,5 +1,6 @@
 package mvc.bean.spform;
 
+//使用abstract是為了不讓使用者自己NEW新資料
 public abstract class BaseData {
 	
 	//用protected是為了要讓繼承BaseData的子類別能夠存取屬性

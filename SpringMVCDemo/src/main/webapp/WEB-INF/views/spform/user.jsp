@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form" %> 
@@ -24,13 +24,14 @@ id: 序號(input hidden)
 				margin-right:2px;
 				margin-left:5px;
 			}
+			.error {
+				color: red;
+			}
 		</style>
 		<script type="text/javascript">
 			function deleteUser(userId) {
-				//const =宣告一個常量，一旦被賦值，就不能再重新賦值或聲明
 				const url = '${pageContext.request.contextPath}/mvc/user/' + userId;
 				if(confirm('是否要刪除 ?')) {
-					//使用Fetch API向指定URL發送DELETE請求，返回一個Promise對象。
 					fetch(url, {method: 'DELETE'})
 					.then(response => {
 						//console.log(response);
