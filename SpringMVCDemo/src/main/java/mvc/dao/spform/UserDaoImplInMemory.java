@@ -21,7 +21,7 @@ import mvc.bean.spform.User;
 public class UserDaoImplInMemory implements UserDao {
 	// User in Memory 資料庫
 	private static List<User> users = new CopyOnWriteArrayList<>();
-	private static AtomicInteger atomicId = new AtomicInteger(0); // 序號
+	private static AtomicInteger atomicId = new AtomicInteger(0);  //文章ID
 	
 	@Autowired
 	@Qualifier("dataDaoImplMySQL")
