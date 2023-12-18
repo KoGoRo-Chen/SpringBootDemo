@@ -25,6 +25,7 @@ import mvc.bean.spform.InterestData;
 import mvc.bean.spform.SexData;
 import mvc.bean.spform.User;
 import mvc.dao.spform.DataDao;
+import mvc.dao.spform.DataDaoMySQL;
 import mvc.dao.spform.UserDao;
 
 @Controller
@@ -33,7 +34,7 @@ public class UserController {
 	
 	@Autowired
 	@Qualifier("dataDaoImplMySQL")
-	private DataDao dataDao;
+	private DataDaoMySQL dataDao;
 	
 	@Autowired
 	@Qualifier("userDaoImplMySQL")

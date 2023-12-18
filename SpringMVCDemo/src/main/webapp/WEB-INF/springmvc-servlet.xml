@@ -18,7 +18,7 @@
 	
 	<context:component-scan base-package="mvc" />
 	
-	<!-- 設定 Spring AOP 切面程式自動實現代理 -->
+		<!-- 設定 Spring AOP 切面程式自動實現代理 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 	
 	<!-- 配置 view 渲染器位置 -->
@@ -60,11 +60,11 @@
     
     <!-- 開啟註解驅動，對事務相關的註解進行掃描與解析 -->
     <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
-    
-    	<!-- 錯誤訊息設定 properites -->
+	
+	<!-- 錯誤訊息設定 properites -->
 	<bean id="messageSource"
 			class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <property name="basename" value="/WEB-INF/resources/errorMessage.properties" />
+	    <property name="basename" value="/WEB-INF/resources/errorMessage" />
 	    <property name="useCodeAsDefaultMessage" value="false"/>
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
